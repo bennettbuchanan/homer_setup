@@ -1,0 +1,40 @@
+DIRECTORY=`dirname ${BASH_ARGV[0]}`
+export OS_AUTH_URL=https://scality.cloud/keystone/v3
+export OS_REGION_NAME=NorthAmerica
+export OS_TENANT_NAME="${SCALITY_CLOUD_EMAIL}"
+export OS_LOGIN_NAME="${SCALITY_CLOUD_USERNAME}"
+# Please edit .oneloginpass file with your password in it
+export ONELOGIN_PASSWORD="${SCALITY_CLOUD_PASSWORD}"
+python ${DIRECTORY}/tools/onelogin_auth_v1.py
+export OS_TOKEN=$(cat ${DIRECTORY}/token.txt)
+export TF_VAR_region="${OS_REGION_NAME}"
+export TF_VAR_os_token="${OS_TOKEN}"
+export TF_VAR_os_tenant="${OS_TENANT_NAME}"
+export TF_VAR_os_url="${OS_AUTH_URL}"
+export OS_AUTH_TYPE=token
+#export OS_PROJECT_DOMAIN_ID=${OS_PROJECT_DOMAIN_ID:-"default"}
+export OS_PROJECT_ID=$(cat ${DIRECTORY}/project_id.txt)
+export TF_VAR_md_install_id=689
+export TF_VAR_results_id=45
+#export TF_VAR_use_local_tarball=false
+#export TF_VAR_s3_version=<version>
+ssh-add ~/.ssh/terraform
+
+if [ ${OS_REGION_NAME} = "NorthAmerica" ];then
+    # SF RING STORAGE NODES
+    export TF_VAR_ring_node_ip_0=10.100.161.151
+    export TF_VAR_ring_node_ip_1=10.100.161.153
+    export TF_VAR_ring_node_ip_2=10.100.161.155
+    export TF_VAR_ring_node_ip_3=10.100.161.156
+    export TF_VAR_ring_node_ip_4=10.100.161.154
+    export TF_VAR_ring_node_ip_5=10.100.161.152
+fi
+if [ ${OS_REGION_NAME} = "Europe" ];then
+    # PARIS RING STORAGE NODES
+    export TF_VAR_ring_node_ip_0=10.200.207.221
+    export TF_VAR_ring_node_ip_1=10.200.207.224
+    export TF_VAR_ring_node_ip_2=10.200.207.225
+    export TF_VAR_ring_node_ip_3=10.200.207.220
+    export TF_VAR_ring_node_ip_4=10.200.207.222
+    export TF_VAR_ring_node_ip_5=10.200.207.223
+fi
