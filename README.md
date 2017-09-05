@@ -8,32 +8,6 @@ This guide assumes:
 
 * Docker is installed
 
-Make sure you have an ssh secret key that is associated with your GitHub
-profile.
-
-We will assume a key pair `~/.ssh/id_rsa` for the private key and
-`~/.ssh/id_rsa.pub` for the public key that does not have a password associated
-with it.
-
-If you have not done this, you can use this command:
-
-```
-ssh-keygen -t rsa -b 4096 -C "your_git_email@example.com"
-```
-
-Confirm git is aware of this key:
-
-```
-ssh -i ~/.ssh/id_rsa -T git@github.com
-```
-
-Output should be something like:
-
-```
-Hi yourname! You've successfully authenticated, but GitHub does not provide
-shell access.
-```
-
 Make sure you have enough room to generate the required Scality Cloud instances:
 * Remove images
 * Remove volumes
@@ -65,6 +39,12 @@ We can use that ID to exec into the docker container:
 
 ```
 docker exec -it 231362fcfd542075e73428d9e77b5479e0f03fa75ace2461e6cf0c3a32cb9a2f bash
+```
+
+Now clone the HOMER project:
+
+```
+git clone https://github.com/scality/HOMER
 ```
 
 Copy open.rc file into the HOMER project:
@@ -162,5 +142,5 @@ that to run tests in /tmp/bin/tester.py you must be 'scality' user.
 ```
 su scality && \
 cd /home/scality/federation && \
-bash /tmp/bin/tester.py
+bash /tmp/bin/tester.sh
 ```

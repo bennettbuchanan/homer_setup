@@ -50,13 +50,9 @@ COPY $ABSOLUTE_PATH_TO_PRIVATE_KEY /root/.ssh/id_rsa
 # git clone -b ft/backbeat https://github.com/scality/HOMER
 RUN yum -y -q install git && \
     mkdir /work && \
-    cd /work \
-    git clone -b "$HOMER_BRANCH" git@github.com:scality/HOMER.git
+    cd /work 
 
 RUN pip install requests
-
-RUN git config --global user.email "$GIT_USER_EMAIL" && \
-    git config --global user.name "$GIT_USER_NAME"
 
 COPY open.rc /work/
 
