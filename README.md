@@ -81,6 +81,12 @@ Make sure security groups are set in scality cloud to allow 0.0.0.0/0 on port 22
 
 TODO: Add screen shots from scality cloud.
 
+Update parallelism to 4:
+
+```
+vim ./reset.sh
+```
+
 Now set up the environment (you might consider setting parallelism in this file
 to 4):
 
@@ -106,7 +112,7 @@ have been created, you can exec into the main docker container that has been
 assigned with your public IP from your Docker container running locally:
 
 ```
-ssh root@<public-ip>
+ssh centos@<public-ip>
 ```
 
 In the working directory you should find the file nohup.out which contains the

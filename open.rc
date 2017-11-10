@@ -1,4 +1,4 @@
-DIRECTORY=`dirname ${BASH_ARGV[0]}`
+DIRECTORY=`dirname ${0}`
 export OS_AUTH_URL=https://scality.cloud/keystone/v3
 export OS_REGION_NAME=NorthAmerica
 export OS_TENANT_NAME="${SCALITY_CLOUD_EMAIL}"
