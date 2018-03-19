@@ -47,6 +47,8 @@ Now clone the HOMER project:
 git clone https://github.com/scality/HOMER
 ```
 
+Checkout any particular branch, if not master.
+
 Copy open.rc file into the HOMER project:
 
 ```
@@ -68,7 +70,7 @@ SSH_AUTH_SOCK=/tmp/ssh-0fgPrDgXmjE8/agent.81; export SSH_AUTH_SOCK;
 Now run the open.rc tasK:
 
 ```
-. open.rc
+source open.rc
 ```
 
 A successful output will look something like:
@@ -81,31 +83,33 @@ Make sure security groups are set in scality cloud to allow 0.0.0.0/0 on port 22
 
 TODO: Add screen shots from scality cloud.
 
-Update parallelism to 4:
+Now set up the environment:
 
 ```
-vim ./reset.sh
+terraform env new backbeat_1site_aws
 ```
 
-Now set up the environment (you might consider setting parallelism in this file
-to 4):
+Now change the build number in `tf/vars.tf`, if necessary.
 
 ```
-./reset.sh backbeat_2sites_12servers
+cd backbeat_1site_aws
 ```
 
-You will be prompted with a message:
-
 ```
-Identity added: /root/.ssh/terraform (/root/.ssh/terraform)
-Do you really want to destroy?
-  Terraform will delete all your managed infrastructure.
-  There is no undo. Only 'yes' will be accepted to confirm.
-
-  Enter a value:
+terraform init ../tf/platform9
 ```
 
-Type `yes` and enter.
+```
+terraform plan -out=plan
+```
+
+Make sure any duplicate security groups are deleted, and all volumes and instances are removed, if necessary.
+
+Now apply the plan:
+
+```
+terraform apply "plan"
+```
 
 The setup of Volumes and instances should take some time. Once the instances
 have been created, you can exec into the main docker container that has been
