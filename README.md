@@ -105,6 +105,8 @@ terraform plan -out=plan
 
 Make sure any duplicate security groups are deleted, and all volumes and instances are removed, if necessary.
 
+Update the configuration to add any necessary multiple backends.
+
 Now apply the plan:
 
 ```
